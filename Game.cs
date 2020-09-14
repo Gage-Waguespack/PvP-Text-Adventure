@@ -4,11 +4,7 @@ using System.Text;
 
 namespace HelloWorld
 {
-    struct Player
-    {
-        public int health;
-        public int damage;
-    }
+
 
     struct Item
     {
@@ -16,11 +12,11 @@ namespace HelloWorld
     }
     class Game
     {
-        bool _gameOver = false;
-        Player _player1;
-        Player _player2;
-        Item longSword;
-        Item dagger;
+        private bool _gameOver = false;
+        private Player _player1;
+        private Player _player2;
+        private Item _longSword;
+        private Item _dagger;
 
         //Run the game
         public void Run()
@@ -36,19 +32,10 @@ namespace HelloWorld
 
         }
 
-        public void InitializePlayers()
-        {
-            _player1.health = 100;
-            _player1.damage = 5;
-
-            _player2.health = 100;
-            _player2.damage = 5;
-        }
-
         public void InitializeItems()
         {
-            longSword.statBoost = 15;
-            dagger.statBoost = 10;
+            _longSword.statBoost = 15;
+            _dagger.statBoost = 10;
         }
 
         public void GetInput(out char input, string option1, string option2, string query)
@@ -69,7 +56,7 @@ namespace HelloWorld
         }
 
         //Equip items to both players in the beginning of the game
-        public void EquipItems()
+        public void SelectItems(Player player)
         {
 
             char input;
@@ -77,35 +64,44 @@ namespace HelloWorld
 
                 if (input == '1')
                 {
-                    _player1.damage += longSword.statBoost;
+                player.EquipItem(_longSword);
                 }
                 else if (input == '2')
                 {
-                    _player1.damage += dagger.statBoost;
+                    player.EquipItem(_dagger);
                 }
                 else
                 {
                     Console.WriteLine("Invalid Input");
                 }
             Console.WriteLine("player 1");
-            PrintStats(_player1);
+            _player1.PrintStats();
 
                 GetInput(out input, "Longsword", "Dagger", "Welcome! Player one please choose a weapon.");
             if (input == '1')
             {
-                _player2.damage += longSword.statBoost;
+                _player2.EquipItem(_longSword);
             }
             else if (input == '2')
             {
-                _player2.damage += dagger.statBoost;
+                _player2.EquipItem(_dagger);
             }
             else
             {
                 Console.WriteLine("Invalid Input");
             }
             Console.WriteLine("player 2");
-            PrintStats(_player2);
+            _player2.PrintStats();
 
+        }
+
+        public Player CreateCharacter()
+        {
+            Console.WriteLine("What is your name?");
+            string name = Console.ReadLine();
+            Player player = new Player(name, 100, 10);
+            SelectItems(player);
+            return player;
         }
 
         public void StartBattle()
@@ -113,13 +109,13 @@ namespace HelloWorld
             Console.Clear();
             Console.WriteLine("Now GO!");
 
-            while(_player1.health >=0 && _player2.health >= 0)
+            while(_player1.GetIsAlive() && _player2.GetIsAlive())
             {
                 //Print player stats to console
                 Console.WriteLine("Player 1");
-                PrintStats(_player1);
+                _player1.PrintStats();
                 Console.WriteLine("Player 2");
-                PrintStats(_player2);
+                _player2.PrintStats();
                 //Player 1 turn start
                 //Get player input
                 char input;
@@ -127,8 +123,7 @@ namespace HelloWorld
 
                 if(input == '1')
                 {
-                    _player2.health -= _player2.damage;
-                    Console.WriteLine("Player 2 took " + _player1.damage + " damage");
+                    _player1.Attack(_player2);
                 }
                 else
                 {
@@ -139,8 +134,7 @@ namespace HelloWorld
 
                 if (input == '1')
                 {
-                    _player2.health -= _player1.damage;
-                    Console.WriteLine("Player 1 took " + _player2.damage + " damage");
+                    _player2.Attack(_player1);
                 }
                 else
                 {
@@ -148,7 +142,7 @@ namespace HelloWorld
                 }
                 Console.Clear();
             }
-            if (_player1.health > 0)
+            if (_player1.GetIsAlive())
             {
                 Console.WriteLine("Player 1 wins !1!!11!1!111!?");
             }
@@ -160,23 +154,17 @@ namespace HelloWorld
             _gameOver = true;
         }
 
-        public void PrintStats(Player player)
-        {
-            Console.WriteLine("Health: " + player.health);
-            Console.WriteLine("Damage: " + player.damage);
-        }
-
         //Performed once when the game begins
         public void Start()
         {
-            InitializePlayers();
             InitializeItems();
         }
 
         //Repeated until the game ends
         public void Update()
         {
-            EquipItems();
+            _player1 = CreateCharacter();
+            _player2 = CreateCharacter();
             StartBattle();
         }
 
