@@ -9,6 +9,7 @@ namespace HelloWorld
     struct Item
     {
         public int statBoost;
+        public char size;
     }
     class Game
     {
@@ -17,6 +18,8 @@ namespace HelloWorld
         private Player _player2;
         private Item _longSword;
         private Item _dagger;
+        private Role _fighter = new Role("Fighter", 120, 15, 'L');
+        private Role _assassin = new Role("Assassin", 100, 30, 'S');
 
         //Run the game
         public void Run()
@@ -35,7 +38,9 @@ namespace HelloWorld
         public void InitializeItems()
         {
             _longSword.statBoost = 15;
+            _longSword.size = 'L';
             _dagger.statBoost = 10;
+            _dagger.size = 'S';
         }
 
         public void GetInput(out char input, string option1, string option2, string query)
@@ -55,51 +60,37 @@ namespace HelloWorld
             }
         }
 
+        //Choose a new role for both players at the start of the game
         //Equip items to both players in the beginning of the game
         public void SelectItems(Player player)
         {
 
             char input;
-            GetInput(out input, "Longsword", "Dagger", "Welcome! Player one please choose a weapon.");
+            GetInput(out input, "Longsword", "Dagger", "Welcome! " +  player.GetName() + " please choose a weapon.");
 
-                if (input == '1')
-                {
-                player.EquipItem(_longSword);
-                }
-                else if (input == '2')
-                {
-                    player.EquipItem(_dagger);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid Input");
-                }
-            Console.WriteLine("player 1");
-            _player1.PrintStats();
-
-                GetInput(out input, "Longsword", "Dagger", "Welcome! Player one please choose a weapon.");
             if (input == '1')
             {
-                _player2.EquipItem(_longSword);
+                player.EquipItem(_longSword);
+                player.SetRole(_fighter);
             }
             else if (input == '2')
             {
-                _player2.EquipItem(_dagger);
+                player.EquipItem(_dagger);
+                player.SetRole(_assassin);
             }
             else
             {
                 Console.WriteLine("Invalid Input");
             }
-            Console.WriteLine("player 2");
-            _player2.PrintStats();
-
+            Console.WriteLine("These are your stats");
+            player.PrintStats();
         }
 
         public Player CreateCharacter()
         {
             Console.WriteLine("What is your name?");
             string name = Console.ReadLine();
-            Player player = new Player(name, 100, 10);
+            Player player = new Player();
             SelectItems(player);
             return player;
         }
@@ -165,6 +156,7 @@ namespace HelloWorld
         {
             _player1 = CreateCharacter();
             _player2 = CreateCharacter();
+
             StartBattle();
         }
 

@@ -6,24 +6,28 @@ namespace HelloWorld
 {
     class Player
     {
+        private Role _role;
         private string _name;
+        private Item _equipItem;
         private int _health;
         private int _damage;
         public Player()
         {
-            _health = 100;
-            _damage = 10;
+            _role = new Role();
+            _health = _role.GetHealth();
+            _damage = _role.GetDamage();
         }
-        public Player(string nameVal, int healthVal, int damageVal)
+        public Player(string nameVal, Role role)
         {
             _name = nameVal;
-            _health = healthVal;
-            _damage = damageVal;
+            _role = role;
+            _health = _role.GetHealth();
+            _damage = _role.GetDamage();
         }
 
         public void EquipItem(Item weapon)
         {
-            _damage += weapon.statBoost;
+            _equipItem = weapon;
         }
 
         public string GetName()
@@ -31,6 +35,10 @@ namespace HelloWorld
             return _name;
         }
 
+        public void SetRole(Role role)
+        {
+            _role = role;
+        }
         public bool GetIsAlive()
         {
             return _health > 0;
@@ -45,9 +53,11 @@ namespace HelloWorld
             Console.WriteLine("Name: " + _name);
             Console.WriteLine("Health: " + _health);
             Console.WriteLine("Damage: " + _damage);
+            Console.WriteLine("Role: " + _role.GetName());
         }
         private void TakeDamage(int damageVal)
         {
+            damageVal = _role.GetDamage();
             if(GetIsAlive())
             {
                 _health -= damageVal;
