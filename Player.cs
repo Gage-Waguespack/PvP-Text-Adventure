@@ -11,23 +11,31 @@ namespace HelloWorld
         private Item _equipItem;
         private int _health;
         private int _damage;
+        private Item[] _inventory;
         public Player()
         {
             _role = new Role();
+            _inventory = new Item[3];
             _health = _role.GetHealth();
             _damage = _role.GetDamage();
         }
-        public Player(string nameVal, Role role)
+        public Player(string nameVal, Role role, int inventorySize)
         {
             _name = nameVal;
             _role = role;
             _health = _role.GetHealth();
             _damage = _role.GetDamage();
+            _inventory = new Item[inventorySize];
         }
 
-        public void EquipItem(Item weapon)
+        public void AddItemToInventory(Item item, int index)
         {
-            _equipItem = weapon;
+            _inventory[index] = item;
+        }
+
+        public void EquipItem(int itemIndex)
+        {
+            _damage = _inventory[itemIndex].statBoost;
         }
 
         public string GetName()

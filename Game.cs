@@ -70,12 +70,12 @@ namespace HelloWorld
 
             if (input == '1')
             {
-                player.EquipItem(_longSword);
+                player.AddItemToInventory(_longSword, 0);
                 player.SetRole(_fighter);
             }
             else if (input == '2')
             {
-                player.EquipItem(_dagger);
+                player.AddItemToInventory(_dagger, 0);
                 player.SetRole(_assassin);
             }
             else
