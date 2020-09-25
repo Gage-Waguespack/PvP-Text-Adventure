@@ -17,14 +17,14 @@ namespace HelloWorld
         private bool _gameOver = false;
         private Player _player1;
         private Player _player2;
+        private Character _player1Partner;
+        private Character _player2Partner;
         private Item _longSword;
         private Item _dagger;
         private Item _bow;
         private Item _crossBow;
         private Item _cherryBomb;
         private Item _mace;
-        private Role _fighter = new Role("Fighter", 120, 15, 'L');
-        private Role _assassin = new Role("Assassin", 100, 30, 'S');
 
         //Run the game
         public void Run()
@@ -122,7 +122,6 @@ namespace HelloWorld
                 player.AddItemToInventory(_dagger, 1);
                 player.AddItemToInventory(_bow, 2);
 
-                player.SetRole(_fighter);
             }
             else if (input == '2')
             {
@@ -130,7 +129,6 @@ namespace HelloWorld
                 player.AddItemToInventory(_cherryBomb, 1);
                 player.AddItemToInventory(_mace, 2);
 
-                player.SetRole(_assassin);
             }
             else
             {
@@ -213,7 +211,10 @@ namespace HelloWorld
 
                 if(input == '1')
                 {
-                    _player1.Attack(_player2);
+                    float damageTaken = _player1.Attack(_player2);
+                    Console.WriteLine(_player1.GetName() + " did " + damageTaken + " damage.");
+                    damageTaken = _player1Partner.Attack(_player2);
+                    Console.WriteLine(_player1Partner.GetName() + " did " + damageTaken + " damage.");
                 }
                 else
                 {
@@ -224,7 +225,10 @@ namespace HelloWorld
 
                 if (input == '1')
                 {
-                    _player2.Attack(_player1);
+                    float damageTaken = _player2.Attack(_player1);
+                    Console.WriteLine(_player2.GetName() + " did " + damageTaken + " damage.");
+                    damageTaken = _player2Partner.Attack(_player1);
+                    Console.WriteLine(_player2Partner.GetName() + " did " + damageTaken + " damage.");
                 }
                 else
                 {
@@ -248,6 +252,8 @@ namespace HelloWorld
         public void Start()
         {
             InitializeItems();
+            _player1Partner = new Wizard(120, "Wizard Lizard", 20, 100);
+            _player2Partner = new Wizard(120, "Harry Wizard 101", 20, 100);
         }
 
         //Repeated until the game ends
