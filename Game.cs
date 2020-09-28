@@ -167,6 +167,8 @@ namespace HelloWorld
             GetInput(out input, "Create new character", "Load Character", "What would you like to do?");
             if (input == '2')
             {
+                _player1 = new Player();
+                _player2 = new Player();
                 Load();
                 return;
             }
@@ -178,9 +180,9 @@ namespace HelloWorld
         public Player CreateCharacter()
         {
             
-            Console.WriteLine("What is your name?");
+            Console.WriteLine("\nWhat is your name?");
             string name = Console.ReadLine();
-            Player player = new Player();
+            Player player = new Player(name, 100, 10, 3);
             SelectLoadout(player);
             return player;
         }
