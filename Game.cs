@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -138,8 +139,45 @@ namespace HelloWorld
             player.PrintStats();
         }
 
+        public void Save()
+        {
+            //Create a new stream writer.
+            StreamWriter writer = new StreamWriter("SaveData.txt");
+            //Call save for both instances for player.
+            _player1.Save(writer);
+            _player2.Save(writer);
+            //Close writer.
+            writer.Close();
+        }
+
+        public void Load()
+        {
+            //Create a new stream reader.
+            StreamReader reader = new StreamReader("SaveData.txt");
+            //Call load for each instance of player to load data.
+            _player1.Load(reader);
+            _player2.Load(reader);
+            //Close reader.
+            reader.Close();
+        }
+
+        public void OpenMainMenu()
+        {
+            char input;
+            GetInput(out input, "Create new character", "Load Character", "What would you like to do?");
+            if (input == '2')
+            {
+                Load();
+                return;
+            }
+            _player1 = CreateCharacter();
+            _player2 = CreateCharacter();
+            Save();
+        }
+
         public Player CreateCharacter()
         {
+            
             Console.WriteLine("What is your name?");
             string name = Console.ReadLine();
             Player player = new Player();
@@ -254,14 +292,13 @@ namespace HelloWorld
             InitializeItems();
             _player1Partner = new Wizard(120, "Wizard Lizard", 20, 100);
             _player2Partner = new Wizard(120, "Harry Wizard 101", 20, 100);
+            
         }
 
         //Repeated until the game ends
         public void Update()
         {
-            _player1 = CreateCharacter();
-            _player2 = CreateCharacter();
-
+            OpenMainMenu();
             StartBattle();
         }
 
