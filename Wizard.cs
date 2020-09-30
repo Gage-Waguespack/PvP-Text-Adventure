@@ -14,8 +14,8 @@ namespace HelloWorld
             _mana = 100;
         }
 
-        public Wizard(float healthVal, string nameVal, float damageVal, float manaVal) 
-            : base(healthVal, nameVal, damageVal)
+        public Wizard(float healthVal, string nameVal, float damageVal, float goldVal, float manaVal) 
+            : base(healthVal, nameVal, damageVal, goldVal)
         {
             _mana = manaVal;
         }

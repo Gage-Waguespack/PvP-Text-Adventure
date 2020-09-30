@@ -16,8 +16,8 @@ namespace HelloWorld
             _hands.name = "These hands";
             _hands.statBoost = 0;
         }
-        public Player(string nameVal, float healthVal, float damageVal, int inventorySize)
-            : base(healthVal, nameVal, damageVal)
+        public Player(string nameVal, float healthVal, float damageVal, float goldVal, int inventorySize)
+            : base(healthVal, nameVal, damageVal, goldVal)
         {
             _inventory = new Item[inventorySize];
             _hands.name = "These hands";
@@ -63,5 +63,16 @@ namespace HelloWorld
             float totalDamage = _damage + _currentWeapon.statBoost;
             return enemy.TakeDamage(totalDamage);
         }
+        public bool Buy(Item item)
+        {
+            if (_gold >= item.cost)
+            {
+                // pays for the item then places it in the inventory array
+                _gold -= item.cost;
+                return true;
+            }
+            return false;
+        }
+
     }
 }

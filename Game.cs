@@ -11,7 +11,7 @@ namespace HelloWorld
     {
         public string name;
         public int statBoost;
-        public char size;
+        public int cost;
     }
     class Game
     {
@@ -26,6 +26,8 @@ namespace HelloWorld
         private Item _crossBow;
         private Item _cherryBomb;
         private Item _mace;
+        private Item _healthPot;
+        private Item _strengthPot;
 
         //Run the game
         public void Run()
@@ -45,22 +47,22 @@ namespace HelloWorld
         {
             _longSword.name = "Long Sword";
             _longSword.statBoost = 15;
-            _longSword.size = 'L';
             _dagger.name = "Dagger";
             _dagger.statBoost = 10;
-            _dagger.size = 'S';
             _bow.name = "Bow";
             _bow.statBoost = 12;
-            _bow.size = 'M';
             _crossBow.name = "Crossbow";
             _crossBow.statBoost = 34;
-            _crossBow.size = 'M';
             _cherryBomb.name = "Cherry Bomb";
             _cherryBomb.statBoost = 24;
-            _cherryBomb.size = 'S';
             _mace.name = "Mace";
             _mace.statBoost = 25;
-            _mace.size = 'L';
+            _healthPot.name = "Health Potion";
+            _healthPot.statBoost = 50;
+            _healthPot.cost = 25;
+            _strengthPot.name = "Strength Potion";
+            _strengthPot.statBoost = 25;
+            _strengthPot.cost = 25;
         }
 
         public void GetInput(out char input, string option1, string option2, string query)
@@ -182,7 +184,7 @@ namespace HelloWorld
             
             Console.WriteLine("\nWhat is your name?");
             string name = Console.ReadLine();
-            Player player = new Player(name, 100, 10, 3);
+            Player player = new Player(name, 100, 10, 50, 3);
             SelectLoadout(player);
             return player;
         }
@@ -247,7 +249,7 @@ namespace HelloWorld
                 //Player 1 turn start
                 //Get player input
                 char input;
-                GetInput(out input, "Attack", "Change Weapon", "Your turn Player 1");
+                GetInput(out input, "Attack", "Change Weapon", "Shop", "Your turn Player 1");
 
                 if(input == '1')
                 {
@@ -256,12 +258,27 @@ namespace HelloWorld
                     damageTaken = _player1Partner.Attack(_player2);
                     Console.WriteLine(_player1Partner.GetName() + " did " + damageTaken + " damage.");
                 }
-                else
+                if (input == '2')
                 {
                     SwitchWeapons(_player1);
                 }
+                //Lets the player pick an item to buy.. health pot upgrades health by 25 and strength pot ups damage by 25.
+                if (input == '3')
+                {
+                    GetInput(out input, "Health Potion", "Strength Potion","Pick an item to buy!");
+                    if (input == '1')
+                    {
+                        _player1.Buy(_healthPot);
+                        _player1.HealthPot();
+                    }
+                    if (input == '2')
+                    {
+                        _player1.Buy(_strengthPot);
+                        _player1.StrengthPot();
+                    }
+                }
 
-                GetInput(out input, "Attack", "Change Weapon", "Your turn Player 2");
+                GetInput(out input, "Attack", "Change Weapon", "Shop", "Your turn Player 2");
 
                 if (input == '1')
                 {
@@ -270,9 +287,23 @@ namespace HelloWorld
                     damageTaken = _player2Partner.Attack(_player1);
                     Console.WriteLine(_player2Partner.GetName() + " did " + damageTaken + " damage.");
                 }
-                else
+                if (input == '2')
                 {
                     SwitchWeapons(_player2);
+                }
+                if (input == '3')
+                {
+                    GetInput(out input, "Health Potion", "Strength Potion", "Pick an item to buy!");
+                    if (input == '1')
+                    {
+                        _player2.Buy(_healthPot);
+                        _player2.HealthPot();
+                    }
+                    if (input == '2')
+                    {
+                        _player2.Buy(_strengthPot);
+                        _player2.StrengthPot();
+                    }
                 }
                 Console.Clear();
             }
@@ -292,8 +323,8 @@ namespace HelloWorld
         public void Start()
         {
             InitializeItems();
-            _player1Partner = new Wizard(120, "Wizard Lizard", 20, 100);
-            _player2Partner = new Wizard(120, "Harry Wizard 101", 20, 100);
+            _player1Partner = new Wizard(120, "Wizard Lizard", 20, 100, 50);
+            _player2Partner = new Wizard(120, "Harry Wizard 101", 20, 100, 50);
             
         }
 

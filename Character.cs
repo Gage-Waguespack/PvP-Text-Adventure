@@ -10,18 +10,21 @@ namespace HelloWorld
         private float _health;
         private string _name;
         protected float _damage;
+        public float _gold;
 
         public Character()
         {
             _health = 100;
             _name = "Hero";
             _damage = 10;
+            _gold = 50;
         }
-        public Character(float healthVal, string nameVal, float damageVal)
+        public Character(float healthVal, string nameVal, float damageVal, float goldVal)
         {
             _health = healthVal;
             _name = nameVal;
             _damage = damageVal;
+            _gold = goldVal;
         }
 
         public virtual float Attack(Character enemy)
@@ -36,8 +39,10 @@ namespace HelloWorld
             Console.WriteLine("Name: " + _name);
             Console.WriteLine("Health: " + _health);
             Console.WriteLine("Damage: " + _damage);
+            Console.WriteLine("Gold: " + _gold);
         }
 
+        //This function takes in a damage variable to take away from health.
         public virtual float TakeDamage(float damageVal)
         {
             _health -= damageVal;
@@ -86,6 +91,14 @@ namespace HelloWorld
         public bool GetIsAlive()
         {
             return _health > 0;
+        }
+        public void HealthPot()
+        {
+            _health += 25;
+        }
+        public void StrengthPot()
+        {
+            _damage += 25;
         }
     }
 }
