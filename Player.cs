@@ -72,5 +72,16 @@ namespace HelloWorld
             return enemy.TakeDamage(totalDamage);
         }
 
+        //created a buy function to buy potions in game
+        public bool Buy(Item item)
+        {
+            if (_gold >= item.cost)
+            {
+                // pays for the item then places it in the inventory array
+                _gold -= item.cost;
+                return true;
+            }
+            return false;
+        }
     }
 }
