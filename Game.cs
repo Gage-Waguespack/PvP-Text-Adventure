@@ -43,6 +43,8 @@ namespace HelloWorld
 
         }
 
+
+        // Initializes all items created, making them usable in the game.
         public void InitializeItems()
         {
             _longSword.name = "Long Sword";
@@ -65,6 +67,7 @@ namespace HelloWorld
             _strengthPot.cost = 25;
         }
 
+        //created a GetInput function that takes in an input, 2 options, and a query to simplify making a question and an oppertunity to pick one of the selected options.
         public void GetInput(out char input, string option1, string option2, string query)
         {
             Console.WriteLine(query);
@@ -82,6 +85,7 @@ namespace HelloWorld
             }
         }
 
+        //made another GetInput function that takes in a third option.
         public void GetInput(out char input, string option1, string option2, string option3, string query)
         {
             Console.WriteLine(query);
@@ -116,6 +120,7 @@ namespace HelloWorld
             Console.WriteLine(_mace.name);
             Console.WriteLine();
 
+            //used the GetInput function to chose a loadout for the game
             char input;
             GetInput(out input, "Loadout 1", "Loadout 2", "Welcome! " +  player.GetName() + " please choose a weapon.");
 
@@ -161,6 +166,7 @@ namespace HelloWorld
             reader.Close();
         }
 
+        //Made a main menu that is used at the start of the game..
         public void OpenMainMenu()
         {
             char input;
@@ -177,6 +183,7 @@ namespace HelloWorld
             Save();
         }
 
+        //Lets the player(s) create their own character OR load a save at the start..
         public Player CreateCharacter()
         {
             
@@ -187,6 +194,7 @@ namespace HelloWorld
             return player;
         }
 
+        //Lets the player switch weapons 
         public void SwitchWeapons(Player player)
         {
             Item[] inventory = player.GetInventory();
@@ -337,7 +345,7 @@ namespace HelloWorld
         //Performed once when the game ends
         public void End()
         {
-            
+            Console.WriteLine("CONGRATS!!!!");
         }
     }
 }

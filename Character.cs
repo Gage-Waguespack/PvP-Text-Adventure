@@ -90,19 +90,25 @@ namespace HelloWorld
             return true;
         }
 
+        //returns the players name
         public string GetName()
         {
             return _name;
         }
 
+        //checks to see if the player is alive
         public bool GetIsAlive()
         {
             return _health > 0;
         }
+
+        //lets the healthPot heal the player in game
         public void HealthPot()
         {
             _health += 25;
         }
+
+        // lets the strengthPot raise the players damage in game
         public void StrengthPot()
         {
             _damage += 25;

@@ -14,12 +14,14 @@ namespace HelloWorld
             _mana = 100;
         }
 
+        //created an overload of the barb that takes in specific values to give it set stats.
         public Wizard(float healthVal, string nameVal, float damageVal, float goldVal, float manaVal) 
             : base(healthVal, nameVal, damageVal, goldVal)
         {
             _mana = manaVal;
         }
 
+        //Makes it to where the Barb can attack with the player (player 1)..
         public override float Attack(Character enemy)
         {
             float damageTaken = 0.0f;
