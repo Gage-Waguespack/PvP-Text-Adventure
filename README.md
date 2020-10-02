@@ -17,3 +17,5 @@ The game will go on until one of the players has died and after that it will dis
 winner and that will be it.
 
 # Bugs and issues
+- You have unlimited gold, This won't really effect gameplay because it was built that way. -
+- When loading a game save then changing weapons, there are no weapons listed and your stats don't change whatsoever. -

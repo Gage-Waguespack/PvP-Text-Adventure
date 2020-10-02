@@ -7,7 +7,7 @@ namespace HelloWorld
 {
     class Character
     {
-        private float _health;
+        protected float _health;
         private string _name;
         protected float _damage;
         public float _gold;
@@ -17,7 +17,7 @@ namespace HelloWorld
             _health = 100;
             _name = "Hero";
             _damage = 10;
-            _gold = 50;
+            _gold = 500;
         }
         public Character(float healthVal, string nameVal, float damageVal, float goldVal)
         {
@@ -59,6 +59,7 @@ namespace HelloWorld
             writer.WriteLine(_name);
             writer.WriteLine(_health);
             writer.WriteLine(_damage);
+            writer.WriteLine(_gold);
         }
 
         public virtual bool Load(StreamReader reader)
@@ -67,6 +68,7 @@ namespace HelloWorld
             string name = reader.ReadLine();
             float damage = 0;
             float health = 0;
+            float gold = 0;
             //Checks to see if loading was successful.
             if (float.TryParse(reader.ReadLine(), out health) == false)
             {
@@ -76,10 +78,15 @@ namespace HelloWorld
             {
                 return false;
             }
+            if (float.TryParse(reader.ReadLine(), out gold) == false)
+            {
+                return false;
+            }
             //If successful, set update the member variable and return true.
             _name = name;
             _damage = damage;
             _health = health;
+            _gold = gold;
             return true;
         }
 

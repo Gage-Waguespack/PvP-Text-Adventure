@@ -122,16 +122,14 @@ namespace HelloWorld
             if (input == '1')
             {
                 player.AddItemToInventory(_longSword, 0);
-                player.AddItemToInventory(_dagger, 1);
+                player.AddItemToInventory(_mace, 1);
                 player.AddItemToInventory(_bow, 2);
-
             }
             else if (input == '2')
             {
                 player.AddItemToInventory(_crossBow, 0);
                 player.AddItemToInventory(_cherryBomb, 1);
-                player.AddItemToInventory(_mace, 2);
-
+                player.AddItemToInventory(_dagger, 2);
             }
             else
             {
@@ -184,7 +182,7 @@ namespace HelloWorld
             
             Console.WriteLine("\nWhat is your name?");
             string name = Console.ReadLine();
-            Player player = new Player(name, 100, 10, 50, 3);
+            Player player = new Player(name, 100, 10, 500, 3);
             SelectLoadout(player);
             return player;
         }
@@ -323,9 +321,10 @@ namespace HelloWorld
         public void Start()
         {
             InitializeItems();
-            _player1Partner = new Wizard(120, "Wizard Lizard", 20, 100, 50);
-            _player2Partner = new Wizard(120, "Harry Wizard 101", 20, 100, 50);
-            
+
+            _player1Partner = new Barb(150, "Shrek", 40, 500, 2);
+            _player2Partner = new Wizard(120, "Barry Hizard", 20, 100, 50);
+
         }
 
         //Repeated until the game ends
