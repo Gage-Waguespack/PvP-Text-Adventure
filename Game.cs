@@ -28,7 +28,6 @@ namespace HelloWorld
         private Item _mace;
         private Item _healthPot;
         private Item _strengthPot;
-
         //Run the game
         public void Run()
         {
@@ -142,6 +141,43 @@ namespace HelloWorld
             }
             Console.WriteLine("These are your stats");
             player.PrintStats();
+        }
+
+        public void PrintText(string Text, ConsoleColor Color)
+        {
+            Console.ForegroundColor = Color;
+            Console.WriteLine(Text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        //I want to have the player change the color of the text.
+        public void ColorChange()
+        {
+            Console.WriteLine("Would you like to change the color of the text?");
+            Console.WriteLine("Current Color: ", Console.ForegroundColor);
+            GetInput(out char input, "Yes", "No", "Would you like to change the color of the text?");
+            if (input == '1')
+            {
+                int[] _choices = new int[4] { 1, 2, 3, 4, };
+                for (int i = 0; i < _choices.Length; i++)
+                {
+                    PrintText(_choices[i].ToString(), (ConsoleColor)i + 9);
+                }
+
+                int choice = 0;
+                while (choice == 0)
+                {
+                    if (int.TryParse(Console.ReadLine(), out choice) == false)
+                    {
+                        Console.WriteLine("Invalid Input");
+                    }
+                }
+                Console.ForegroundColor = (ConsoleColor)choice + 8;
+            }
+            else if (input == '2')
+            {
+                Console.WriteLine("You decided not to change your color!");
+            }
         }
 
         public void Save()
@@ -328,8 +364,8 @@ namespace HelloWorld
         //Performed once when the game begins
         public void Start()
         {
+            ColorChange();
             InitializeItems();
-
             _player1Partner = new Barb(150, "Shrek", 40, 500, 2);
             _player2Partner = new Wizard(120, "Barry Hizard", 20, 100, 50);
 
